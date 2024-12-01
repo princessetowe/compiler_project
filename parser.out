@@ -1,0 +1,494 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    BREAK
+    CLASS
+    COMMENT
+    DEF
+    EXCEPT
+    FOR
+    KEYWORD
+    RETURN
+    TRY
+    WHILE
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> statement_list
+Rule 2     statement_list -> statement
+Rule 3     statement_list -> statement_list statement
+Rule 4     statement -> assignment
+Rule 5     statement -> print_statement
+Rule 6     statement -> if_statement
+Rule 7     assignment -> IDENTIFIER OPERATOR expression
+Rule 8     print_statement -> PRINT ( expression )
+Rule 9     if_statement -> IF expression : statement_list ELSE : statement_list
+Rule 10    if_statement -> IF expression : statement_list
+Rule 11    expression -> term
+Rule 12    expression -> expression OPERATOR term
+Rule 13    term -> NUMBER
+Rule 14    term -> STRING
+Rule 15    term -> IDENTIFIER
+
+Terminals, with rules where they appear
+
+(                    : 8
+)                    : 8
+:                    : 9 9 10
+BREAK                : 
+CLASS                : 
+COMMENT              : 
+DEF                  : 
+ELSE                 : 9
+EXCEPT               : 
+FOR                  : 
+IDENTIFIER           : 7 15
+IF                   : 9 10
+KEYWORD              : 
+NUMBER               : 13
+OPERATOR             : 7 12
+PRINT                : 8
+RETURN               : 
+STRING               : 14
+TRY                  : 
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+assignment           : 4
+expression           : 7 8 9 10 12
+if_statement         : 6
+print_statement      : 5
+program              : 0
+statement            : 2 3
+statement_list       : 1 3 9 9 10
+term                 : 11 12
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . statement_list
+    (2) statement_list -> . statement
+    (3) statement_list -> . statement_list statement
+    (4) statement -> . assignment
+    (5) statement -> . print_statement
+    (6) statement -> . if_statement
+    (7) assignment -> . IDENTIFIER OPERATOR expression
+    (8) print_statement -> . PRINT ( expression )
+    (9) if_statement -> . IF expression : statement_list ELSE : statement_list
+    (10) if_statement -> . IF expression : statement_list
+
+    IDENTIFIER      shift and go to state 7
+    PRINT           shift and go to state 8
+    IF              shift and go to state 9
+
+    program                        shift and go to state 1
+    statement_list                 shift and go to state 2
+    statement                      shift and go to state 3
+    assignment                     shift and go to state 4
+    print_statement                shift and go to state 5
+    if_statement                   shift and go to state 6
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> statement_list .
+    (3) statement_list -> statement_list . statement
+    (4) statement -> . assignment
+    (5) statement -> . print_statement
+    (6) statement -> . if_statement
+    (7) assignment -> . IDENTIFIER OPERATOR expression
+    (8) print_statement -> . PRINT ( expression )
+    (9) if_statement -> . IF expression : statement_list ELSE : statement_list
+    (10) if_statement -> . IF expression : statement_list
+
+    $end            reduce using rule 1 (program -> statement_list .)
+    IDENTIFIER      shift and go to state 7
+    PRINT           shift and go to state 8
+    IF              shift and go to state 9
+
+    statement                      shift and go to state 10
+    assignment                     shift and go to state 4
+    print_statement                shift and go to state 5
+    if_statement                   shift and go to state 6
+
+state 3
+
+    (2) statement_list -> statement .
+
+    IDENTIFIER      reduce using rule 2 (statement_list -> statement .)
+    PRINT           reduce using rule 2 (statement_list -> statement .)
+    IF              reduce using rule 2 (statement_list -> statement .)
+    $end            reduce using rule 2 (statement_list -> statement .)
+    ELSE            reduce using rule 2 (statement_list -> statement .)
+
+
+state 4
+
+    (4) statement -> assignment .
+
+    IDENTIFIER      reduce using rule 4 (statement -> assignment .)
+    PRINT           reduce using rule 4 (statement -> assignment .)
+    IF              reduce using rule 4 (statement -> assignment .)
+    $end            reduce using rule 4 (statement -> assignment .)
+    ELSE            reduce using rule 4 (statement -> assignment .)
+
+
+state 5
+
+    (5) statement -> print_statement .
+
+    IDENTIFIER      reduce using rule 5 (statement -> print_statement .)
+    PRINT           reduce using rule 5 (statement -> print_statement .)
+    IF              reduce using rule 5 (statement -> print_statement .)
+    $end            reduce using rule 5 (statement -> print_statement .)
+    ELSE            reduce using rule 5 (statement -> print_statement .)
+
+
+state 6
+
+    (6) statement -> if_statement .
+
+    IDENTIFIER      reduce using rule 6 (statement -> if_statement .)
+    PRINT           reduce using rule 6 (statement -> if_statement .)
+    IF              reduce using rule 6 (statement -> if_statement .)
+    $end            reduce using rule 6 (statement -> if_statement .)
+    ELSE            reduce using rule 6 (statement -> if_statement .)
+
+
+state 7
+
+    (7) assignment -> IDENTIFIER . OPERATOR expression
+
+    OPERATOR        shift and go to state 11
+
+
+state 8
+
+    (8) print_statement -> PRINT . ( expression )
+
+    (               shift and go to state 12
+
+
+state 9
+
+    (9) if_statement -> IF . expression : statement_list ELSE : statement_list
+    (10) if_statement -> IF . expression : statement_list
+    (11) expression -> . term
+    (12) expression -> . expression OPERATOR term
+    (13) term -> . NUMBER
+    (14) term -> . STRING
+    (15) term -> . IDENTIFIER
+
+    NUMBER          shift and go to state 15
+    STRING          shift and go to state 16
+    IDENTIFIER      shift and go to state 17
+
+    expression                     shift and go to state 13
+    term                           shift and go to state 14
+
+state 10
+
+    (3) statement_list -> statement_list statement .
+
+    IDENTIFIER      reduce using rule 3 (statement_list -> statement_list statement .)
+    PRINT           reduce using rule 3 (statement_list -> statement_list statement .)
+    IF              reduce using rule 3 (statement_list -> statement_list statement .)
+    $end            reduce using rule 3 (statement_list -> statement_list statement .)
+    ELSE            reduce using rule 3 (statement_list -> statement_list statement .)
+
+
+state 11
+
+    (7) assignment -> IDENTIFIER OPERATOR . expression
+    (11) expression -> . term
+    (12) expression -> . expression OPERATOR term
+    (13) term -> . NUMBER
+    (14) term -> . STRING
+    (15) term -> . IDENTIFIER
+
+    NUMBER          shift and go to state 15
+    STRING          shift and go to state 16
+    IDENTIFIER      shift and go to state 17
+
+    expression                     shift and go to state 18
+    term                           shift and go to state 14
+
+state 12
+
+    (8) print_statement -> PRINT ( . expression )
+    (11) expression -> . term
+    (12) expression -> . expression OPERATOR term
+    (13) term -> . NUMBER
+    (14) term -> . STRING
+    (15) term -> . IDENTIFIER
+
+    NUMBER          shift and go to state 15
+    STRING          shift and go to state 16
+    IDENTIFIER      shift and go to state 17
+
+    expression                     shift and go to state 19
+    term                           shift and go to state 14
+
+state 13
+
+    (9) if_statement -> IF expression . : statement_list ELSE : statement_list
+    (10) if_statement -> IF expression . : statement_list
+    (12) expression -> expression . OPERATOR term
+
+    :               shift and go to state 20
+    OPERATOR        shift and go to state 21
+
+
+state 14
+
+    (11) expression -> term .
+
+    :               reduce using rule 11 (expression -> term .)
+    OPERATOR        reduce using rule 11 (expression -> term .)
+    IDENTIFIER      reduce using rule 11 (expression -> term .)
+    PRINT           reduce using rule 11 (expression -> term .)
+    IF              reduce using rule 11 (expression -> term .)
+    $end            reduce using rule 11 (expression -> term .)
+    ELSE            reduce using rule 11 (expression -> term .)
+    )               reduce using rule 11 (expression -> term .)
+
+
+state 15
+
+    (13) term -> NUMBER .
+
+    :               reduce using rule 13 (term -> NUMBER .)
+    OPERATOR        reduce using rule 13 (term -> NUMBER .)
+    IDENTIFIER      reduce using rule 13 (term -> NUMBER .)
+    PRINT           reduce using rule 13 (term -> NUMBER .)
+    IF              reduce using rule 13 (term -> NUMBER .)
+    $end            reduce using rule 13 (term -> NUMBER .)
+    ELSE            reduce using rule 13 (term -> NUMBER .)
+    )               reduce using rule 13 (term -> NUMBER .)
+
+
+state 16
+
+    (14) term -> STRING .
+
+    :               reduce using rule 14 (term -> STRING .)
+    OPERATOR        reduce using rule 14 (term -> STRING .)
+    IDENTIFIER      reduce using rule 14 (term -> STRING .)
+    PRINT           reduce using rule 14 (term -> STRING .)
+    IF              reduce using rule 14 (term -> STRING .)
+    $end            reduce using rule 14 (term -> STRING .)
+    ELSE            reduce using rule 14 (term -> STRING .)
+    )               reduce using rule 14 (term -> STRING .)
+
+
+state 17
+
+    (15) term -> IDENTIFIER .
+
+    :               reduce using rule 15 (term -> IDENTIFIER .)
+    OPERATOR        reduce using rule 15 (term -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 15 (term -> IDENTIFIER .)
+    PRINT           reduce using rule 15 (term -> IDENTIFIER .)
+    IF              reduce using rule 15 (term -> IDENTIFIER .)
+    $end            reduce using rule 15 (term -> IDENTIFIER .)
+    ELSE            reduce using rule 15 (term -> IDENTIFIER .)
+    )               reduce using rule 15 (term -> IDENTIFIER .)
+
+
+state 18
+
+    (7) assignment -> IDENTIFIER OPERATOR expression .
+    (12) expression -> expression . OPERATOR term
+
+    IDENTIFIER      reduce using rule 7 (assignment -> IDENTIFIER OPERATOR expression .)
+    PRINT           reduce using rule 7 (assignment -> IDENTIFIER OPERATOR expression .)
+    IF              reduce using rule 7 (assignment -> IDENTIFIER OPERATOR expression .)
+    $end            reduce using rule 7 (assignment -> IDENTIFIER OPERATOR expression .)
+    ELSE            reduce using rule 7 (assignment -> IDENTIFIER OPERATOR expression .)
+    OPERATOR        shift and go to state 21
+
+
+state 19
+
+    (8) print_statement -> PRINT ( expression . )
+    (12) expression -> expression . OPERATOR term
+
+    )               shift and go to state 22
+    OPERATOR        shift and go to state 21
+
+
+state 20
+
+    (9) if_statement -> IF expression : . statement_list ELSE : statement_list
+    (10) if_statement -> IF expression : . statement_list
+    (2) statement_list -> . statement
+    (3) statement_list -> . statement_list statement
+    (4) statement -> . assignment
+    (5) statement -> . print_statement
+    (6) statement -> . if_statement
+    (7) assignment -> . IDENTIFIER OPERATOR expression
+    (8) print_statement -> . PRINT ( expression )
+    (9) if_statement -> . IF expression : statement_list ELSE : statement_list
+    (10) if_statement -> . IF expression : statement_list
+
+    IDENTIFIER      shift and go to state 7
+    PRINT           shift and go to state 8
+    IF              shift and go to state 9
+
+    statement_list                 shift and go to state 23
+    statement                      shift and go to state 3
+    assignment                     shift and go to state 4
+    print_statement                shift and go to state 5
+    if_statement                   shift and go to state 6
+
+state 21
+
+    (12) expression -> expression OPERATOR . term
+    (13) term -> . NUMBER
+    (14) term -> . STRING
+    (15) term -> . IDENTIFIER
+
+    NUMBER          shift and go to state 15
+    STRING          shift and go to state 16
+    IDENTIFIER      shift and go to state 17
+
+    term                           shift and go to state 24
+
+state 22
+
+    (8) print_statement -> PRINT ( expression ) .
+
+    IDENTIFIER      reduce using rule 8 (print_statement -> PRINT ( expression ) .)
+    PRINT           reduce using rule 8 (print_statement -> PRINT ( expression ) .)
+    IF              reduce using rule 8 (print_statement -> PRINT ( expression ) .)
+    $end            reduce using rule 8 (print_statement -> PRINT ( expression ) .)
+    ELSE            reduce using rule 8 (print_statement -> PRINT ( expression ) .)
+
+
+state 23
+
+    (9) if_statement -> IF expression : statement_list . ELSE : statement_list
+    (10) if_statement -> IF expression : statement_list .
+    (3) statement_list -> statement_list . statement
+    (4) statement -> . assignment
+    (5) statement -> . print_statement
+    (6) statement -> . if_statement
+    (7) assignment -> . IDENTIFIER OPERATOR expression
+    (8) print_statement -> . PRINT ( expression )
+    (9) if_statement -> . IF expression : statement_list ELSE : statement_list
+    (10) if_statement -> . IF expression : statement_list
+
+  ! shift/reduce conflict for ELSE resolved as shift
+  ! shift/reduce conflict for IDENTIFIER resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    ELSE            shift and go to state 25
+    $end            reduce using rule 10 (if_statement -> IF expression : statement_list .)
+    IDENTIFIER      shift and go to state 7
+    PRINT           shift and go to state 8
+    IF              shift and go to state 9
+
+  ! IDENTIFIER      [ reduce using rule 10 (if_statement -> IF expression : statement_list .) ]
+  ! PRINT           [ reduce using rule 10 (if_statement -> IF expression : statement_list .) ]
+  ! IF              [ reduce using rule 10 (if_statement -> IF expression : statement_list .) ]
+  ! ELSE            [ reduce using rule 10 (if_statement -> IF expression : statement_list .) ]
+
+    statement                      shift and go to state 10
+    assignment                     shift and go to state 4
+    print_statement                shift and go to state 5
+    if_statement                   shift and go to state 6
+
+state 24
+
+    (12) expression -> expression OPERATOR term .
+
+    :               reduce using rule 12 (expression -> expression OPERATOR term .)
+    OPERATOR        reduce using rule 12 (expression -> expression OPERATOR term .)
+    IDENTIFIER      reduce using rule 12 (expression -> expression OPERATOR term .)
+    PRINT           reduce using rule 12 (expression -> expression OPERATOR term .)
+    IF              reduce using rule 12 (expression -> expression OPERATOR term .)
+    $end            reduce using rule 12 (expression -> expression OPERATOR term .)
+    ELSE            reduce using rule 12 (expression -> expression OPERATOR term .)
+    )               reduce using rule 12 (expression -> expression OPERATOR term .)
+
+
+state 25
+
+    (9) if_statement -> IF expression : statement_list ELSE . : statement_list
+
+    :               shift and go to state 26
+
+
+state 26
+
+    (9) if_statement -> IF expression : statement_list ELSE : . statement_list
+    (2) statement_list -> . statement
+    (3) statement_list -> . statement_list statement
+    (4) statement -> . assignment
+    (5) statement -> . print_statement
+    (6) statement -> . if_statement
+    (7) assignment -> . IDENTIFIER OPERATOR expression
+    (8) print_statement -> . PRINT ( expression )
+    (9) if_statement -> . IF expression : statement_list ELSE : statement_list
+    (10) if_statement -> . IF expression : statement_list
+
+    IDENTIFIER      shift and go to state 7
+    PRINT           shift and go to state 8
+    IF              shift and go to state 9
+
+    statement_list                 shift and go to state 27
+    statement                      shift and go to state 3
+    assignment                     shift and go to state 4
+    print_statement                shift and go to state 5
+    if_statement                   shift and go to state 6
+
+state 27
+
+    (9) if_statement -> IF expression : statement_list ELSE : statement_list .
+    (3) statement_list -> statement_list . statement
+    (4) statement -> . assignment
+    (5) statement -> . print_statement
+    (6) statement -> . if_statement
+    (7) assignment -> . IDENTIFIER OPERATOR expression
+    (8) print_statement -> . PRINT ( expression )
+    (9) if_statement -> . IF expression : statement_list ELSE : statement_list
+    (10) if_statement -> . IF expression : statement_list
+
+  ! shift/reduce conflict for IDENTIFIER resolved as shift
+  ! shift/reduce conflict for PRINT resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    $end            reduce using rule 9 (if_statement -> IF expression : statement_list ELSE : statement_list .)
+    ELSE            reduce using rule 9 (if_statement -> IF expression : statement_list ELSE : statement_list .)
+    IDENTIFIER      shift and go to state 7
+    PRINT           shift and go to state 8
+    IF              shift and go to state 9
+
+  ! IDENTIFIER      [ reduce using rule 9 (if_statement -> IF expression : statement_list ELSE : statement_list .) ]
+  ! PRINT           [ reduce using rule 9 (if_statement -> IF expression : statement_list ELSE : statement_list .) ]
+  ! IF              [ reduce using rule 9 (if_statement -> IF expression : statement_list ELSE : statement_list .) ]
+
+    statement                      shift and go to state 10
+    assignment                     shift and go to state 4
+    print_statement                shift and go to state 5
+    if_statement                   shift and go to state 6
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for ELSE in state 23 resolved as shift
+WARNING: shift/reduce conflict for IDENTIFIER in state 23 resolved as shift
+WARNING: shift/reduce conflict for PRINT in state 23 resolved as shift
+WARNING: shift/reduce conflict for IF in state 23 resolved as shift
+WARNING: shift/reduce conflict for IDENTIFIER in state 27 resolved as shift
+WARNING: shift/reduce conflict for PRINT in state 27 resolved as shift
+WARNING: shift/reduce conflict for IF in state 27 resolved as shift

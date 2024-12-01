@@ -38,10 +38,10 @@ def open_file(path):
 
 menub = Menu(compiler)
 
-# runb = Menu(menub, tearoff=0)
-# runb.add_command(label='Run', command=run)
-# menub.add_cascade(label='Run', menu=runb)
-# compiler.config(menu=menub)
+runb = Menu(menub, tearoff=0)
+runb.add_command(label='Run', command=runb)
+menub.add_cascade(label='Run', menu=runb)
+compiler.config(menu=menub)
 
 text_widget = scrolledtext.ScrolledText(compiler, wrap=tk.WORD)
 text_widget.pack(expand=True, fill='both')

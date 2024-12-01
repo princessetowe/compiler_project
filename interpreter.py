@@ -1,11 +1,15 @@
 import itertools
+# import argparse
+import sys
 from parser import exec_function
 #works with iterators
 def get_user_input():
-    #an endless sequence of user inputs
+    #an endless sequence of
+    # user inputs
     for i in itertools.count():
+        print(sys.argv)#prints the name of the file
         try:
-            yield i, input('17in[%d]:' % i)
+            yield i, input('grp11in[%d]>>' % i)
         except KeyboardInterrupt:
             break
 

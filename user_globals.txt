@@ -1,0 +1,39 @@
+# from enum import Enum
+# from dataclasses import dataclass
+# class TokenType(Enum):
+#     #Token type definitons with IDs
+#     NUMBER = 0
+#     IDENTIFIER = 1
+#     LPAREN = 2
+#     RPAREN = 3 
+#     STRING = 4
+#     MULTIPLY = 5
+#     DIVIDE = 6
+#     PLUS = 7
+#     MINUS = 8
+#     EQUALS = 9
+#     COLON = 10
+#     COMMA = 11
+#     NEWLINE = 12
+#     INDENT = 13
+#     PRINT = 14
+#     DEF = 15
+#     CLASS = 16
+#     IF = 17
+#     ELSE = 18
+#     FOR = 19
+#     WHILE = 20
+#     BREAK = 21
+#     RETURN = 22 
+#     TRY = 23
+#     EXCEPT = 24
+
+# @dataclass
+# class Token:
+#     #creates a field type with the value
+#     type: TokenType
+#     value: any=None #expects a value which is the value so any value can be taken and some whuch were not assigned
+
+#     def __repr__(self):
+#         #represntation function for debygging
+#         return self.type.name + (f":{self.value}" if self.value != None else "")
