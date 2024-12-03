@@ -39,15 +39,4 @@ class Parser:
             print("Syntax error at EOF")
 
 
-# Test the parser
-if __name__ == "__main__":
-    from lexer import build_lexer  # Import the lexer construction function
-    lexer = build_lexer()  # Create the lexer
-    parser = build_parser()  # Create the parser
 
-    data = '''
-    x = 10 + 5
-    print("Result:", x)
-    '''
-    # Parse the input data using the lexer and parser
-    parser.parse(data, lexer=lexer)
