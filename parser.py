@@ -1,5 +1,5 @@
 import ply.yacc as yacc
-from lexer import tokens
+from lexer import lexerr, tokens
 
 class Parser:
     def __init__(self):
@@ -38,5 +38,50 @@ class Parser:
         else:
             print("Syntax error at EOF")
 
+tokens = ['NUMBER', 'STRING', 'IDENTIFIER', 'OPERATOR', 'COMMENT']
 
+# Grammar
+precedence = (
+    ('left', 'OPERATOR'),
+)
 
+def p_statement_expr(p):
+    '''statement : expression'''
+    print("Valid statement:", p[1])
+
+def p_expression_binop(p):
+    '''expression : expression OPERATOR expression'''
+    p[0] = (p[2], p[1], p[3])  # Left operand, operator, right operand
+
+def p_expression_number(p):
+    '''expression : NUMBER'''
+    p[0] = p[1]
+
+def p_expression_string(p):
+    '''expression : STRING'''
+    p[0] = p[1]
+
+def p_expression_identifier(p):
+    '''expression : IDENTIFIER'''
+    p[0] = p[1]
+
+def p_error(p):
+    if p:
+        print(f"Syntax error at '{p.value}'")
+    else:
+        print("Syntax error at EOF")
+
+# Build the parser
+parser = yacc.yacc()
+
+if __name__ == "__main":
+    lexer = lexerr()
+    parser = Parser()
+
+    program = '''
+    x = 10 + 5
+    y = "Hello, world!"
+    z = x + y
+    '''
+
+    parser.parser.parse(program, lexer=lexer)
