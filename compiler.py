@@ -1,37 +1,34 @@
-from lexer import lexerr, tokens
-from parser import Parser
+from lexer import *
+from parser import *
+from interpreter import *
+from validator import Validator
+from debugger import Debugger
 from symboltable import SymbolTable
-from validatorr import Validator
+import sys
+
+
+def read_file(filename):
+    with open(filename, 'r') as file:
+        return file.read()
 
 def main():
-    lexer = lexerr()
-    parser = Parser()
-    symbol_table = SymbolTable()
-    validator = Validator(symbol_table)
+    print(f"{sys.argv}> ")
+    if len(sys.argv) < 2:
+        sys.exit(1)
 
-    program = '''
-    x = 10
-    y = 20
-    z = x + y
-    print(z)
-    '''
+    filename = sys.argv[1]
+    data = read_file(filename)
 
-    print("Tokens:")
-    lexer.input(program)
-    while True:
-        tok = lexer.token()
-        if not tok:
-            break
-        print(tok)
-    # for token in lexer:
-    #     print(token)
+    debugger = Debugger()
+    validator = Validator(SymbolTable)
 
     print("\nParsing and Execution:")
     try:
-        parser.paparse(program)
-        print("\nSymbol Table:")
-        for name, details in symbol_table.symbols.items():
-            print(f"{name}: {details}")
+        debugger.set_breakpoint(3)
+        debugger.run(data)
+        parse_d(data)
+        
+        
     except Exception as e:
         print(f"Error: {e}")
 

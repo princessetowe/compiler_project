@@ -1,4 +1,5 @@
-from symboltable import SymbolTable
+from parser import *
+from symboltable import *
 
 class Validator:
     def __init__(self, symbol_table):

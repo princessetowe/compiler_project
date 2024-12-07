@@ -1,99 +1,107 @@
 from tkinter import *
 import tkinter as tk
+from tkinter import scrolledtext, messagebox, filedialog
 from tkinter.filedialog import asksaveasfilename, askopenfilename
-import tkinter.scrolledtext as scrolledtext
 import subprocess
-compiler = tk.Tk()
+import sys
 
-compiler.title('Group 11')
-
-#storing the file path
-file_path = ''
-
-#function that captures the file path
-def set_file_path(path):
-    global file_path
-    file_path = path  
-
-def save_as():
-    path = asksaveasfilename(filetypes=[('Python Files', '*.py')])
-    if not path.endswith(".py"):
-    #if the file is not a python file then make it a python file
-        path += ".py"
-    with open(path, 'w') as file:
-         code = text_widget.get('1.0', END)
-         file.write(code)
-         set_file_path(path)
-
-def open_file():
-    try:
-        path = askopenfilename(filetypes=[('Python Files', '*.py')])
-        if path:
-            with open(path, "r") as file:
-                text = file.read()
-                text_widget.delete('1.0', END)
-                text_widget.insert('1.0', text)
-                set_file_path(path)
-    except FileNotFoundError:
-        print("File not found")
-    except Exception as e:
-        # print(f"{e}")
-        print(f"An error occured {e}")
-
-def run():
-    code = text_widget.get('1.0', END)
-    try:
-        with open("temp.py", "w") as main:
-            main.write(code)
-            process = subprocess.Popen(["python", "compiler.py", code], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-            output, error = process.communicate()
-            code_output.config(state=NORMAL)
-            code_output.delete('1.0', END)
+class Group11IDE:
+    def __init__(self, root):
+        self.root = root
+        self.file_path = ''
+        self.root.title("Group 11")
+        self.create_widgets()
         
-        if error:
-            code_output.insert('1.0', error)
-            code_output.insert(state=DISABLED)
+       
+        
 
-    except Exception as e:
-        code_output.config(state=NORMAL)
-        code_output.delete("1.0", END)
-        code_output.insert(END, f"Error: {str(e)}", error)
-        code_output.config(state=DISABLED)
-    # print(code)
+        # Create a button to run the code
+        # self.run_button = tk.Button(root, text="Run", command=self.run)
+        # self.run_button.pack(side=tk.TOP)
 
-def copy_text():
-    compiler.clipboard_clear()
-    content = text_widget.selection_get()
-    compiler.clipboard_append(content)
+        # Create a button to save the code
+        # self.save_button = tk.Button(root, text="Save As", command=self.save_code)
+        # self.save_button.pack(side=tk.TOP)
 
-def paste_text():
-    text_widget.insert(INSERT, compiler.clipboard_get())
+    
+     # Create a text area for code input
+    def create_widgets(self):
+        self.code_input = scrolledtext.ScrolledText(root, wrap=tk.WORD, font=("Consolas", 12))
+        self.code_input.pack(expand=True, fill='both')
 
-menub = Menu(compiler)
+        self.menub = Menu(self.root)
+        self.fileb = Menu(self.menub, tearoff=0)
+        self.fileb.add_command(label='Open', command=self.open_file)
+        self.fileb.add_command(label='Exit', command=self.root.quit)
+        self.fileb.add_command(label='Save As', command=self.save_code)
+        self.menub.add_cascade(label='File', menu=self.fileb)
 
-fileb = Menu(menub, tearoff=0)
-fileb.add_command(label='Open', command=open_file)
-fileb.add_command(label='Exit', command=exit)
-fileb.add_command(label='Save As', command=save_as)
-menub.add_cascade(label='File', menu=fileb)
+        self.runb = Menu(self.menub, tearoff=0)
+        self.runb.add_command(label='Run', command=self.run)
+        self.menub.add_cascade(label='Run', menu=self.runb)
 
-runb = Menu(menub, tearoff=0)
-runb.add_command(label='Run', command=run)
-menub.add_cascade(label='Run', menu=runb)
+        self.output_area = scrolledtext.ScrolledText(root, wrap=tk.WORD, font=("Consolas", 10), bg="black", fg="white", height=10)
+        self.output_area.pack(expand=True, fill='both')
+        self.output_area.config(state=tk.DISABLED)
 
+        self.root.config(menu=self.menub)
 
-compiler.config(menu=menub)
+    #run function
+    def run(self):
+        #reads the whole file from the top to end
+        code = self.code_input.get('1.0', tk.END)
+        #opens a temp file and stores the code
+        with open("temp.py", "w") as temp_file:
+            temp_file.write(code)
 
-text_widget = Text(compiler, wrap=tk.WORD, font=("Consolas", 12), bg="white", fg="black")
-text_widget.pack(expand=True, fill='both')
-# text_widget.configure(font=("TkDefaultFont", 10))
+        try:
+            #run the compiler file
+            result = subprocess.run([sys.executable, "c:\\Users\\Rhumeh\\Desktop\\compiler_project\\compiler.py", "temp.py"], capture_output=True, text=True)
+            output = result.stdout
+            error = result.stderr
+            #an area for the output
+            self.output_area.config(state=tk.NORMAL)
+            #clears the previous output
+            self.output_area.delete('1.0', tk.END)
+            if output:
+                self.output_area.insert(tk.END, output)
+            if error:
+                self.output_area.insert(tk.END, f"Error:\n{error}")
+            self.output_area.config(state=tk.DISABLED)
 
-text_label = Label(compiler, text="Terminal Output:", font=("Arial", 12))
-text_label.pack()
+        except Exception as e:
+            messagebox.showerror("Execution Error", str(e))
+    
+    #saves the code
+    def save_code(self):
+        #uses the asksavefile module to save the file
+        #makes the default the file python
+        file_path = filedialog.asksaveasfilename(defaultextension=".py", filetypes=[("Python Files", "*.py")])
+        #if the file path is a python file then write into the file
+        #gets the code from the top to end of the file
+        if file_path:
+            with open(file_path, 'w') as file:
+                code = self.code_input.get('1.0', tk.END)
+                file.write(code)
 
-code_output = scrolledtext.ScrolledText(bg="Black", fg='white', height=10, font=("Consolas", 10))
-code_output.pack(expand=True, fill='both')
-code_output.tag_configure("error", foreground="red")
-code_output.config(state=DISABLED)
+    #function to open a file
+    #uses the askopen module which is 
+    def open_file(self):
+        #use 
+        try:
+            path = askopenfilename(filetypes=[('Python Files', '*.py')])
+            if path:
+                with open(path, "r") as file:
+                    text = file.read()
+                    self.code_input.delete('1.0', END)
+                    self.code_input.insert('1.0', text)
+                    self.file_path(path)
+        except FileNotFoundError:
+            print("File not found")
+        except Exception as e:
+            print(f"An error occured {e}")
 
-compiler.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    ide = Group11IDE(root)
+    root.mainloop()

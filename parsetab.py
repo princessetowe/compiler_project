@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'leftOPERATORCOMMENT IDENTIFIER NUMBER OPERATOR STRINGstatement : expressionexpression : expression OPERATOR expressionexpression : NUMBERexpression : STRINGexpression : IDENTIFIER'
+_lr_signature = 'leftPLUSMINUSleftMULTIPLYDIVIDEDEF DIVIDE ELSE EQUAL FOR IDENTIFIER IF LPAREN MINUS MULTIPLY NUMBER PLUS RPAREN STRING WHILEstatement : expression\n                 | assignment\n                 | control_structure\n                 | function_def\n                 | emptyexpression : term\n                  | expression PLUS term\n                  | expression MINUS termterm : factor\n            | term MULTIPLY factor\n            | term DIVIDE factor factor : NUMBER\n              | STRING\n              | IDENTIFIER\n              | LPAREN expression RPAREN assignment : IDENTIFIER EQUAL expressioncontrol_structure : if_statement\n                         | while_loop\n                         | for_loopif_statement : IF LPAREN expression RPAREN statement ELSE statement\n                    | IF LPAREN expression RPAREN statementwhile_loop : WHILE LPAREN expression RPAREN statementfor_loop : FOR LPAREN assignment expression RPAREN statementfunction_def : DEF IDENTIFIER LPAREN RPAREN statementempty :'
     
-_lr_action_items = {'NUMBER':([0,6,],[3,3,]),'STRING':([0,6,],[4,4,]),'IDENTIFIER':([0,6,],[5,5,]),'$end':([1,2,3,4,5,7,],[0,-1,-3,-4,-5,-2,]),'OPERATOR':([2,3,4,5,7,],[6,-3,-4,-5,-2,]),}
+_lr_action_items = {'IDENTIFIER':([0,7,12,13,14,18,19,20,21,22,23,24,27,28,29,30,31,32,33,34,35,37,40,42,43,44,49,50,],[8,-6,25,27,-9,-12,-13,27,27,27,27,27,-14,27,27,41,-7,-8,-10,-11,-16,-15,27,8,8,8,8,8,]),'DEF':([0,42,43,44,49,50,],[12,12,12,12,12,12,]),'$end':([0,1,2,3,4,5,6,7,8,9,10,11,14,18,19,27,31,32,33,34,35,37,42,43,44,46,47,48,49,50,51,52,],[-25,0,-1,-2,-3,-4,-5,-6,-14,-17,-18,-19,-9,-12,-13,-14,-7,-8,-10,-11,-16,-15,-25,-25,-25,-24,-21,-22,-25,-25,-23,-20,]),'IF':([0,42,43,44,49,50,],[15,15,15,15,15,15,]),'WHILE':([0,42,43,44,49,50,],[16,16,16,16,16,16,]),'FOR':([0,42,43,44,49,50,],[17,17,17,17,17,17,]),'NUMBER':([0,7,13,14,18,19,20,21,22,23,24,27,28,29,31,32,33,34,35,37,40,42,43,44,49,50,],[18,-6,18,-9,-12,-13,18,18,18,18,18,-14,18,18,-7,-8,-10,-11,-16,-15,18,18,18,18,18,18,]),'STRING':([0,7,13,14,18,19,20,21,22,23,24,27,28,29,31,32,33,34,35,37,40,42,43,44,49,50,],[19,-6,19,-9,-12,-13,19,19,19,19,19,-14,19,19,-7,-8,-10,-11,-16,-15,19,19,19,19,19,19,]),'LPAREN':([0,7,13,14,15,16,17,18,19,20,21,22,23,24,25,27,28,29,31,32,33,34,35,37,40,42,43,44,49,50,],[13,-6,13,-9,28,29,30,-12,-13,13,13,13,13,13,36,-14,13,13,-7,-8,-10,-11,-16,-15,13,13,13,13,13,13,]),'ELSE':([2,3,4,5,6,7,8,9,10,11,14,18,19,27,31,32,33,34,35,37,42,43,44,46,47,48,49,50,51,52,],[-1,-2,-3,-4,-5,-6,-14,-17,-18,-19,-9,-12,-13,-14,-7,-8,-10,-11,-16,-15,-25,-25,-25,-24,50,-22,-25,-25,-23,-20,]),'PLUS':([2,7,8,14,18,19,26,27,31,32,33,34,35,37,38,39,45,],[20,-6,-14,-9,-12,-13,20,-14,-7,-8,-10,-11,20,-15,20,20,20,]),'MINUS':([2,7,8,14,18,19,26,27,31,32,33,34,35,37,38,39,45,],[21,-6,-14,-9,-12,-13,21,-14,-7,-8,-10,-11,21,-15,21,21,21,]),'RPAREN':([7,14,18,19,26,27,31,32,33,34,36,37,38,39,45,],[-6,-9,-12,-13,37,-14,-7,-8,-10,-11,42,-15,43,44,49,]),'MULTIPLY':([7,8,14,18,19,27,31,32,33,34,37,],[22,-14,-9,-12,-13,-14,22,22,-10,-11,-15,]),'DIVIDE':([7,8,14,18,19,27,31,32,33,34,37,],[23,-14,-9,-12,-13,-14,23,23,-10,-11,-15,]),'EQUAL':([8,41,],[24,24,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'expression':([0,6,],[2,7,]),}
+_lr_goto_items = {'statement':([0,42,43,44,49,50,],[1,46,47,48,51,52,]),'expression':([0,13,24,28,29,40,42,43,44,49,50,],[2,26,35,38,39,45,2,2,2,2,2,]),'assignment':([0,30,42,43,44,49,50,],[3,40,3,3,3,3,3,]),'control_structure':([0,42,43,44,49,50,],[4,4,4,4,4,4,]),'function_def':([0,42,43,44,49,50,],[5,5,5,5,5,5,]),'empty':([0,42,43,44,49,50,],[6,6,6,6,6,6,]),'term':([0,13,20,21,24,28,29,40,42,43,44,49,50,],[7,7,31,32,7,7,7,7,7,7,7,7,7,]),'if_statement':([0,42,43,44,49,50,],[9,9,9,9,9,9,]),'while_loop':([0,42,43,44,49,50,],[10,10,10,10,10,10,]),'for_loop':([0,42,43,44,49,50,],[11,11,11,11,11,11,]),'factor':([0,13,20,21,22,23,24,28,29,40,42,43,44,49,50,],[14,14,14,14,33,34,14,14,14,14,14,14,14,14,14,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,9 +27,29 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> statement","S'",1,None,None,None),
-  ('statement -> expression','statement',1,'p_statement_expr','parser.py',49),
-  ('expression -> expression OPERATOR expression','expression',3,'p_expression_binop','parser.py',53),
-  ('expression -> NUMBER','expression',1,'p_expression_number','parser.py',57),
-  ('expression -> STRING','expression',1,'p_expression_string','parser.py',61),
-  ('expression -> IDENTIFIER','expression',1,'p_expression_identifier','parser.py',65),
+  ('statement -> expression','statement',1,'p_statement','parser2.py',12),
+  ('statement -> assignment','statement',1,'p_statement','parser2.py',13),
+  ('statement -> control_structure','statement',1,'p_statement','parser2.py',14),
+  ('statement -> function_def','statement',1,'p_statement','parser2.py',15),
+  ('statement -> empty','statement',1,'p_statement','parser2.py',16),
+  ('expression -> term','expression',1,'p_expression','parser2.py',20),
+  ('expression -> expression PLUS term','expression',3,'p_expression','parser2.py',21),
+  ('expression -> expression MINUS term','expression',3,'p_expression','parser2.py',22),
+  ('term -> factor','term',1,'p_term','parser2.py',31),
+  ('term -> term MULTIPLY factor','term',3,'p_term','parser2.py',32),
+  ('term -> term DIVIDE factor','term',3,'p_term','parser2.py',33),
+  ('factor -> NUMBER','factor',1,'p_factor','parser2.py',42),
+  ('factor -> STRING','factor',1,'p_factor','parser2.py',43),
+  ('factor -> IDENTIFIER','factor',1,'p_factor','parser2.py',44),
+  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor','parser2.py',45),
+  ('assignment -> IDENTIFIER EQUAL expression','assignment',3,'p_assignment','parser2.py',52),
+  ('control_structure -> if_statement','control_structure',1,'p_control_structure','parser2.py',56),
+  ('control_structure -> while_loop','control_structure',1,'p_control_structure','parser2.py',57),
+  ('control_structure -> for_loop','control_structure',1,'p_control_structure','parser2.py',58),
+  ('if_statement -> IF LPAREN expression RPAREN statement ELSE statement','if_statement',7,'p_if_statement','parser2.py',62),
+  ('if_statement -> IF LPAREN expression RPAREN statement','if_statement',5,'p_if_statement','parser2.py',63),
+  ('while_loop -> WHILE LPAREN expression RPAREN statement','while_loop',5,'p_while_loop','parser2.py',70),
+  ('for_loop -> FOR LPAREN assignment expression RPAREN statement','for_loop',6,'p_for_loop','parser2.py',74),
+  ('function_def -> DEF IDENTIFIER LPAREN RPAREN statement','function_def',5,'p_function_def','parser2.py',78),
+  ('empty -> <empty>','empty',0,'p_empty','parser2.py',82),
 ]
